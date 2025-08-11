@@ -1,0 +1,12 @@
+{
+  "name": "qlear-app",
+  "private": true,
+  "packageManager": "pnpm@10.14.0",
+  "workspaces": ["apps/*", "packages/*"],
+  "scripts": {
+    "dev:web": "pnpm --filter @app/web dev",
+    "dev:server": "pnpm --filter @app/server dev",
+    "build": "pnpm -r build",
+    "typecheck": "pnpm -r typecheck"
+  }
+}
