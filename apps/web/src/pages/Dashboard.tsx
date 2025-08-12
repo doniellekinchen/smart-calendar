@@ -1,4 +1,30 @@
+import { useEffect, useState } from "react";
+import BriefCard from "../components/dashboard/BriefCard";
+import FocusBlock from "../components/dashboard/FocusBlock";
+import HabitsToday from "../components/dashboard/HabitsToday";
+import UpcomingList from "../components/dashboard/UpcomingList";
+import MiniMonth from "../components/dashboard/MiniMonth";
+import QuickAdd from "../components/dashboard/QuickAdd";
+import { fetchEventsToday, type Event } from "../api/events";
+
 export default function Dashboard() {
+  const [events, setEvents] = useState<Event[] | null>(null);
+  const [loadingEvents, setLoadingEvents] = useState(true);
+
+  async function loadToday() {
+    setLoadingEvents(true);
+    try {
+      const data = await fetchEventsToday();
+      setEvents(data);
+    } finally {
+      setLoadingEvents(false);
+    }
+  }
+
+  useEffect(() => {
+    loadToday();
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
       <main className="flex-1 pt-16">
@@ -7,6 +33,7 @@ export default function Dashboard() {
             {/* Left column (spans 2 on large) */}
             <div className="lg:col-span-2 space-y-6">
               <section
+                role="region"
                 aria-labelledby="brief-title"
                 className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm"
               >
@@ -14,10 +41,11 @@ export default function Dashboard() {
                   Today’s Brief
                 </h2>
                 <div className="h-px bg-slate-100 my-3" />
-                <p className="text-slate-500">Brief content goes here…</p>
+                <BriefCard />
               </section>
 
               <section
+                role="region"
                 aria-labelledby="upcoming-title"
                 className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm"
               >
@@ -25,10 +53,11 @@ export default function Dashboard() {
                   Upcoming
                 </h2>
                 <div className="h-px bg-slate-100 my-3" />
-                <p className="text-slate-500">Upcoming events list…</p>
+                <UpcomingList events={events} loading={loadingEvents} />
               </section>
 
               <section
+                role="region"
                 aria-labelledby="quickadd-title"
                 className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm"
               >
@@ -36,13 +65,14 @@ export default function Dashboard() {
                   Quick Add
                 </h2>
                 <div className="h-px bg-slate-100 my-3" />
-                <p className="text-slate-500">Inline add form placeholder…</p>
+                <QuickAdd onAdded={loadToday} />
               </section>
             </div>
 
             {/* Right column */}
             <div className="lg:col-span-1 space-y-6">
               <section
+                role="region"
                 aria-labelledby="focus-title"
                 className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm"
               >
@@ -50,10 +80,14 @@ export default function Dashboard() {
                   AI Focus Block
                 </h2>
                 <div className="h-px bg-slate-100 my-3" />
-                <p className="text-slate-500">Suggest a 60-min block…</p>
+                <FocusBlock
+                  description="Let AI suggest your best deep work time today."
+                  onSuggest={() => console.log("Suggesting focus block...")}
+                />
               </section>
 
               <section
+                role="region"
                 aria-labelledby="mini-title"
                 className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm"
               >
@@ -61,10 +95,11 @@ export default function Dashboard() {
                   Mini Month
                 </h2>
                 <div className="h-px bg-slate-100 my-3" />
-                <p className="text-slate-500">Mini month calendar…</p>
+                <MiniMonth />
               </section>
 
               <section
+                role="region"
                 aria-labelledby="habits-title"
                 className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm"
               >
@@ -72,7 +107,7 @@ export default function Dashboard() {
                   Habits Today
                 </h2>
                 <div className="h-px bg-slate-100 my-3" />
-                <p className="text-slate-500">Habit checkboxes…</p>
+                <HabitsToday events={events} />
               </section>
             </div>
           </div>
