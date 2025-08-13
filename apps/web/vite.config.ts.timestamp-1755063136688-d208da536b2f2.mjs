@@ -1,0 +1,11 @@
+// vite.config.ts
+import { defineConfig } from "file:///Users/djdonikay/Desktop/smart-calendar/node_modules/.pnpm/vite@5.4.19_@types+node@20.19.10_lightningcss@1.30.1/node_modules/vite/dist/node/index.js";
+import react from "file:///Users/djdonikay/Desktop/smart-calendar/node_modules/.pnpm/@vitejs+plugin-react@4.7.0_vite@5.4.19_@types+node@20.19.10_lightningcss@1.30.1_/node_modules/@vitejs/plugin-react/dist/index.js";
+import tailwind from "file:///Users/djdonikay/Desktop/smart-calendar/node_modules/.pnpm/@tailwindcss+vite@4.1.11_vite@5.4.19_@types+node@20.19.10_lightningcss@1.30.1_/node_modules/@tailwindcss/vite/dist/index.mjs";
+var vite_config_default = defineConfig({
+  plugins: [react(), tailwind()]
+});
+export {
+  vite_config_default as default
+};
+//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsidml0ZS5jb25maWcudHMiXSwKICAic291cmNlc0NvbnRlbnQiOiBbImNvbnN0IF9fdml0ZV9pbmplY3RlZF9vcmlnaW5hbF9kaXJuYW1lID0gXCIvVXNlcnMvZGpkb25pa2F5L0Rlc2t0b3Avc21hcnQtY2FsZW5kYXIvYXBwcy93ZWJcIjtjb25zdCBfX3ZpdGVfaW5qZWN0ZWRfb3JpZ2luYWxfZmlsZW5hbWUgPSBcIi9Vc2Vycy9kamRvbmlrYXkvRGVza3RvcC9zbWFydC1jYWxlbmRhci9hcHBzL3dlYi92aXRlLmNvbmZpZy50c1wiO2NvbnN0IF9fdml0ZV9pbmplY3RlZF9vcmlnaW5hbF9pbXBvcnRfbWV0YV91cmwgPSBcImZpbGU6Ly8vVXNlcnMvZGpkb25pa2F5L0Rlc2t0b3Avc21hcnQtY2FsZW5kYXIvYXBwcy93ZWIvdml0ZS5jb25maWcudHNcIjtpbXBvcnQgeyBkZWZpbmVDb25maWcgfSBmcm9tICd2aXRlJ1xuaW1wb3J0IHJlYWN0IGZyb20gJ0B2aXRlanMvcGx1Z2luLXJlYWN0J1xuaW1wb3J0IHRhaWx3aW5kIGZyb20gJ0B0YWlsd2luZGNzcy92aXRlJ1xuXG5leHBvcnQgZGVmYXVsdCBkZWZpbmVDb25maWcoe1xuICBwbHVnaW5zOiBbcmVhY3QoKSwgdGFpbHdpbmQoKV0sXG59KVxuIl0sCiAgIm1hcHBpbmdzIjogIjtBQUFrVSxTQUFTLG9CQUFvQjtBQUMvVixPQUFPLFdBQVc7QUFDbEIsT0FBTyxjQUFjO0FBRXJCLElBQU8sc0JBQVEsYUFBYTtBQUFBLEVBQzFCLFNBQVMsQ0FBQyxNQUFNLEdBQUcsU0FBUyxDQUFDO0FBQy9CLENBQUM7IiwKICAibmFtZXMiOiBbXQp9Cg==

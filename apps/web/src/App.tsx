@@ -1,7 +1,11 @@
- import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { supabase } from "./lib/supabase";
 import Dashboard from "./pages/Dashboard";
 import Header from "./components/Header";
+
+// 🔧 TEMP: bypass login so you can work on the Dashboard UI.
+// set to false once auth is configured.
+const DEV_SKIP_AUTH = true;
 
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -18,7 +22,24 @@ export default function App() {
     return () => { mounted = false; sub.subscription.unsubscribe(); };
   }, []);
 
-  if (loading) return <div className="min-h-screen grid place-items-center text-slate-600">Loading…</div>;
+  // ---- DEV BYPASS (early return) ----
+  if (DEV_SKIP_AUTH) {
+    return (
+      <>
+        <Header />
+        <Dashboard />
+      </>
+    );
+  }
+  // -----------------------------------
+
+  if (loading) {
+    return (
+      <div className="min-h-screen grid place-items-center text-slate-600">
+        Loading…
+      </div>
+    );
+  }
 
   if (!session) {
     return (
@@ -50,7 +71,10 @@ function Auth() {
     e.preventDefault();
     setSending(true); setErr(null); setMsg(null);
     try {
-      const { error } = await supabase.auth.signInWithOtp({ email, options: { emailRedirectTo: window.location.origin } });
+      const { error } = await supabase.auth.signInWithOtp({
+        email,
+        options: { emailRedirectTo: window.location.origin },
+      });
       if (error) throw error;
       setMsg("Check your email for the magic link.");
     } catch (e: any) {
@@ -61,7 +85,10 @@ function Auth() {
   }
 
   async function signInWithGoogle() {
-    await supabase.auth.signInWithOAuth({ provider: "google", options: { redirectTo: window.location.origin } });
+    await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: { redirectTo: window.location.origin },
+    });
   }
 
   return (
