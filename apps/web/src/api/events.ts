@@ -29,13 +29,13 @@ export function todayRange(): { from: string; to: string } {
 }
 
 /** GET today’s events */
-export async function fetchEventsToday(): Promise<Event[]> {
-  const url = `${BASE}/api/events?range=today`;
+export async function fetchEventsToday(category?: string) {
+  const base = `${BASE}/api/events?range=today`;
+  const url = category ? `${base}&category=${encodeURIComponent(category)}` : base;
   const res = await fetch(url);
   if (!res.ok) throw new Error(`fetchEventsToday failed: ${res.status}`);
   return res.json();
 }
-
 /** GET events between two ISO timestamps */
 export async function fetchEvents(from: string, to: string): Promise<Event[]> {
   const url = `${BASE}/api/events?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}`;

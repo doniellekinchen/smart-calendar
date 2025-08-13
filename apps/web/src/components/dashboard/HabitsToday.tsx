@@ -2,18 +2,16 @@ import { useMemo, useState } from "react";
 import { type Event } from "../../api/events";
 
 type Props = {
-  events: Event[] | null;                 // today's events from Dashboard
-  onToggle?: (id: string, done: boolean) => void; // optional: persist later
+  events: Event[] | null;
+  loading?: boolean;
+  onToggle?: (id: string, done: boolean) => void;
 };
 
-export default function HabitsToday({ events, onToggle }: Props) {
-  // derive today's habits from events
+export default function HabitsToday({ events, loading = false, onToggle }: Props) {
   const habitEvents = useMemo(
     () => (events ?? []).filter(e => e.category === "habit"),
     [events]
   );
-
-  // local completion state (id -> done)
   const [doneMap, setDoneMap] = useState<Record<string, boolean>>({});
 
   function toggle(id: string) {
@@ -25,16 +23,24 @@ export default function HabitsToday({ events, onToggle }: Props) {
   }
 
   return (
-    <section
-      aria-labelledby="habits-title"
-      className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm"
-    >
-      <h2 id="habits-title" className="text-sm font-semibold text-slate-800">
-        Habits Today
-      </h2>
+    <section aria-labelledby="habits-title" className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+      <div className="flex items-center justify-between">
+        <h2 id="habits-title" className="text-sm font-semibold text-slate-800">
+          Habits Today
+        </h2>
+        {!loading && (
+          <span className="text-xs text-slate-500">{habitEvents.length}</span>
+        )}
+      </div>
       <div className="h-px bg-slate-100 my-3" />
 
-      {habitEvents.length === 0 ? (
+      {loading ? (
+        <ul className="space-y-2">
+          {[...Array(3)].map((_, i) => (
+            <li key={i} className="h-4 rounded bg-slate-100 animate-pulse" />
+          ))}
+        </ul>
+      ) : habitEvents.length === 0 ? (
         <p className="text-slate-500">No habits scheduled today.</p>
       ) : (
         <ul className="space-y-2">
@@ -55,8 +61,6 @@ export default function HabitsToday({ events, onToggle }: Props) {
                 >
                   {h.title}
                 </label>
-
-                {/* show recurrence if present */}
                 {h.recurrence && h.recurrence !== "none" && (
                   <span className="ml-auto text-xs rounded-full px-2 py-0.5 bg-slate-100 text-slate-600 border border-slate-200">
                     {h.recurrence}
