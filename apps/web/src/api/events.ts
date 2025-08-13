@@ -1,56 +1,21 @@
-export type Category = 'work' | 'personal' | 'habit' | 'focus' | 'break';
-export type Recurrence = 'none' | 'daily' | 'weekdays' | 'weekly';
+const BASE = import.meta.env.VITE_API_URL ?? "";
+export type Event = { id: string; title: string; start: string; end: string; category?: string; recurrence?: string; description?: string; location?: string; };
 
-export type Event = {
-  id: string;
-  title: string;
-  start: string;   // ISO string
-  end: string;     // ISO string
-  category?: Category;
-  description?: string;
-  location?: string;
-  recurrence?: Recurrence;
-};
+import { authFetch } from "./authFetch";
 
-export type NewEvent = Omit<Event, 'id'>;
-
-const BASE = import.meta.env.VITE_API_URL ?? '';
-
-function toISO(date: Date) {
-  return date.toISOString();
-}
-
-export function todayRange(): { from: string; to: string } {
-  const start = new Date();
-  start.setHours(0, 0, 0, 0);
-  const end = new Date();
-  end.setHours(23, 59, 59, 999);
-  return { from: toISO(start), to: toISO(end) };
-}
-
-/** GET today’s events */
-export async function fetchEventsToday(category?: string) {
+export async function fetchEventsToday(category?: string): Promise<Event[]> {
   const base = `${BASE}/api/events?range=today`;
   const url = category ? `${base}&category=${encodeURIComponent(category)}` : base;
-  const res = await fetch(url);
+  const res = await authFetch(url);
   if (!res.ok) throw new Error(`fetchEventsToday failed: ${res.status}`);
   return res.json();
 }
-/** GET events between two ISO timestamps */
-export async function fetchEvents(from: string, to: string): Promise<Event[]> {
-  const url = `${BASE}/api/events?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}`;
-  const res = await fetch(url);
-  if (!res.ok) throw new Error(`fetchEvents failed: ${res.status}`);
-  return res.json();
-}
 
-/** POST create event */
-export async function createEvent(input: NewEvent): Promise<Event> {
-  const res = await fetch(`${BASE}/api/events`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(input),
-  });
+export type Recurrence = "none" | "daily" | "weekdays" | "weekly";
+export type NewEvent = { title: string; start: string; end: string; category?: string; recurrence?: Recurrence; description?: string; location?: string; };
+
+export async function createEvent(payload: NewEvent): Promise<Event> {
+  const res = await authFetch(`${BASE}/api/events`, { method: "POST", body: JSON.stringify(payload) });
   if (!res.ok) throw new Error(`createEvent failed: ${res.status}`);
   return res.json();
 }
