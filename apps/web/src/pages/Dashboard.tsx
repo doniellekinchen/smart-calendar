@@ -41,48 +41,66 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col">
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100 flex flex-col">
       <main className="flex-1 pt-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6">
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
             {/* Left column (spans 2 on large) */}
             <div className="lg:col-span-2 space-y-6">
-              <section role="region" aria-labelledby="brief-title" className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+              <section role="region" aria-labelledby="brief-title" className="group rounded-2xl border border-slate-200/70 bg-white/90 p-5 shadow-sm
+           hover:shadow-md hover:-translate-y-[1px]
+           transition-all duration-200
+           focus-within:ring-1 focus-within:ring-indigo-500">
                 <h2 id="brief-title" className="text-sm font-semibold text-slate-800">Today’s Brief</h2>
-                <div className="h-px bg-slate-100 my-3" />
+                <div className="h-px bg-slate-100 my-4" />
                 <BriefCard />
               </section>
 
-              <section role="region" aria-labelledby="upcoming-title" className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+              <section role="region" aria-labelledby="upcoming-title" className="group rounded-2xl border border-slate-200/70 bg-white/90 p-5 shadow-sm
+           hover:shadow-md hover:-translate-y-[1px]
+           transition-all duration-200
+           focus-within:ring-1 focus-within:ring-indigo-500">
                 <h2 id="upcoming-title" className="text-sm font-semibold text-slate-800">Upcoming</h2>
-                <div className="h-px bg-slate-100 my-3" />
+                <div className="h-px bg-slate-100 my-4" />
                 <UpcomingList events={events} loading={loadingEvents} />
               </section>
 
-              <section role="region" aria-labelledby="quickadd-title" className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+              <section role="region" aria-labelledby="quickadd-title" className="group rounded-2xl border border-slate-200/70 bg-white/90 p-5 shadow-sm
+           hover:shadow-md hover:-translate-y-[1px]
+           transition-all duration-200
+           focus-within:ring-1 focus-within:ring-indigo-500">
                 <h2 id="quickadd-title" className="text-sm font-semibold text-slate-800">Quick Add</h2>
-                <div className="h-px bg-slate-100 my-3" />
+                <div className="h-px bg-slate-100 my-4" />
                 <QuickAdd onAdded={() => { loadToday(); loadHabitsToday(); }} />
               </section>
             </div>
 
             {/* Right column */}
             <div className="lg:col-span-1 space-y-6">
-              <section role="region" aria-labelledby="focus-title" className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+              <section role="region" aria-labelledby="focus-title" className="group rounded-2xl border border-slate-200/70 bg-white/90 p-5 shadow-sm
+           hover:shadow-md hover:-translate-y-[1px]
+           transition-all duration-200
+           focus-within:ring-1 focus-within:ring-indigo-500">
                 <h2 id="focus-title" className="text-sm font-semibold text-slate-800">AI Focus Block</h2>
-                <div className="h-px bg-slate-100 my-3" />
+                <div className="h-px bg-slate-100 my-4" />
                <FocusBlock description="Let AI suggest your best deep work time today." />
               </section>
 
-              <section role="region" aria-labelledby="mini-title" className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+              <section role="region" aria-labelledby="mini-title" className="group rounded-2xl border border-slate-200/70 bg-white/90 p-5 shadow-sm
+           hover:shadow-md hover:-translate-y-[1px]
+           transition-all duration-200
+           focus-within:ring-1 focus-within:ring-indigo-500">
                 <h2 id="mini-title" className="text-sm font-semibold text-slate-800">Mini Month</h2>
-                <div className="h-px bg-slate-100 my-3" />
+                <div className="h-px bg-slate-100 my-4" />
                 <MiniMonth />
               </section>
 
-              <section role="region" aria-labelledby="habits-title" className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+              <section role="region" aria-labelledby="habits-title" className="group rounded-2xl border border-slate-200/70 bg-white/90 p-5 shadow-sm
+           hover:shadow-md hover:-translate-y-[1px]
+           transition-all duration-200
+           focus-within:ring-1 focus-within:ring-indigo-500">
                 <h2 id="habits-title" className="text-sm font-semibold text-slate-800">Habits Today</h2>
-                <div className="h-px bg-slate-100 my-3" />
+                <div className="h-px bg-slate-100 my-4" />
                 {/* pass habit-only events; add loading if your component supports it */}
                 <HabitsToday events={habitEvents} loading={loadingHabits} />
 
